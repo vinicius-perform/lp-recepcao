@@ -13,8 +13,22 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   onOpenPrivacyModal,
   onOpenTermsModal,
 }) => {
-  const handleCheckoutClick = () => {
-    trackInitiateCheckout('kiwify-hero');
+  const handleCheckoutClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    trackInitiateCheckout('lowify-hero');
+    if (typeof window !== 'undefined' && window.location.search) {
+      try {
+        const currentUrl = new URL(KIWIFY_CHECKOUT_URL);
+        const windowParams = new URLSearchParams(window.location.search);
+        windowParams.forEach((val, key) => {
+          if (key !== 'product_id') {
+            currentUrl.searchParams.set(key, val);
+          }
+        });
+        e.currentTarget.href = currentUrl.toString();
+      } catch {
+        // fallback
+      }
+    }
   };
 
   return (

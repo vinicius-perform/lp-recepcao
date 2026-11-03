@@ -211,7 +211,23 @@ export const SectionPacks: React.FC = () => {
           <div className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-3">
             <a
               href={KIWIFY_CHECKOUT_URL}
-              onClick={() => trackInitiateCheckout('kiwify-footer')}
+              onClick={(e) => {
+                trackInitiateCheckout('lowify-footer');
+                if (typeof window !== 'undefined' && window.location.search) {
+                  try {
+                    const currentUrl = new URL(KIWIFY_CHECKOUT_URL);
+                    const windowParams = new URLSearchParams(window.location.search);
+                    windowParams.forEach((val, key) => {
+                      if (key !== 'product_id') {
+                        currentUrl.searchParams.set(key, val);
+                      }
+                    });
+                    e.currentTarget.href = currentUrl.toString();
+                  } catch {
+                    // fallback
+                  }
+                }
+              }}
               className="w-full sm:w-auto px-8 h-[54px] bg-graphite hover:bg-graphite-dark text-white font-bold text-sm sm:text-base tracking-wide rounded-xl flex items-center justify-center gap-2.5 transition-all shadow-btn group cursor-pointer"
             >
               <span>QUERO MEU KIT POR R$ 19,90</span>
