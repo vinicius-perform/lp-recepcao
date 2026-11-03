@@ -12,12 +12,13 @@ Projetada com direção visual *The Golden Edition* (estética champagne, silent
   - **Pack 03 — Pacientes de Volta** (40 scripts: recall de 15 dias, avaliações antigas, pós e bioestimuladores).
 - **Execução imediata**: *Abriu → Encontrou → Copiou → Enviou*.
 
-## ⚡ Fluxo de Compra e CRO
-- Formulário enxuto de 4 campos (Nome, WhatsApp, E-mail, Instagram).
-- **Popup de Checkout Imediato**: ao enviar o formulário, o popup abre com os dados do comprador já pré-preenchidos.
-- Suporte a **Pix Instantâneo** com QR Code e Pix Copia e Cola + **Cartão de Crédito**.
-- Disparo de eventos de conversão e deduplicação de `Purchase` por `event_id`.
-- Liberação segura de acesso via link individualizado.
+## ⚡ Fluxo de Compra Direto (Kiwify)
+- Botões de compra direcionados diretamente ao checkout seguro da Kiwify.
+- O link oficial pode ser configurado centralizadamente em `src/config.ts`:
+  ```ts
+  export const KIWIFY_CHECKOUT_URL = 'https://pay.kiwify.com.br/SEU_CODIGO_AQUI';
+  ```
+- Disparo de eventos de conversão e rastreamento (`InitiateCheckout`).
 
 ## 🛠️ Tecnologias
 - **React 18** + **TypeScript**
@@ -40,3 +41,4 @@ bun run build
 # Preview da build de produção
 bun run preview
 ```
+

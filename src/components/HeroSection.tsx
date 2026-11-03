@@ -1,20 +1,22 @@
 import React from 'react';
 import { HeroVisuals } from './HeroVisuals';
-import { LeadForm } from './LeadForm';
-import { LeadFormData } from '../types';
-import { Check, Sparkles } from 'lucide-react';
+import { KIWIFY_CHECKOUT_URL } from '../config';
+import { Check, Sparkles, ArrowRight, Lock, Zap } from 'lucide-react';
+import { trackInitiateCheckout } from '../utils/analytics';
 
 interface HeroSectionProps {
-  onSubmitSuccess: (data: LeadFormData) => void;
   onOpenPrivacyModal: () => void;
   onOpenTermsModal: () => void;
 }
 
 export const HeroSection: React.FC<HeroSectionProps> = ({
-  onSubmitSuccess,
   onOpenPrivacyModal,
   onOpenTermsModal,
 }) => {
+  const handleCheckoutClick = () => {
+    trackInitiateCheckout('kiwify-hero');
+  };
+
   return (
     <section className="relative pt-8 pb-12 sm:pt-14 sm:pb-16 lg:pt-20 lg:pb-24 overflow-hidden">
       <HeroVisuals />
@@ -90,13 +92,115 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
           </div>
 
-          {/* Colunas 8-12: Formulário de Compra */}
+          {/* Colunas 8-12: Card de Compra Direta */}
           <div className="lg:col-span-5 flex justify-center w-full">
-            <LeadForm
-              onSubmitSuccess={onSubmitSuccess}
-              onOpenPrivacyModal={onOpenPrivacyModal}
-              onOpenTermsModal={onOpenTermsModal}
-            />
+            <div className="w-full bg-white rounded-2xl border border-champagne p-6 sm:p-8 shadow-card relative transition-all">
+              {/* Decorative top gold gradient accent */}
+              <div className="absolute top-0 left-8 right-8 h-[2px] bg-gradient-to-r from-transparent via-gold to-transparent opacity-70" />
+
+              {/* Card Header */}
+              <div className="mb-5">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="inline-block text-[11px] font-bold tracking-widest-editorial text-gold-deep uppercase">
+                    ACESSO IMEDIATO
+                  </span>
+                  <span className="inline-flex items-center gap-1 text-[10px] font-semibold text-emerald-800 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-full">
+                    <Zap className="w-3 h-3 text-emerald-600" />
+                    Pagamento Único
+                  </span>
+                </div>
+                <h2 className="text-xl sm:text-2xl font-bold text-graphite tracking-tight font-sans">
+                  Kit Recepção que Vende
+                </h2>
+                <p className="text-xs text-secondary mt-0.5">
+                  120 scripts comerciais prontos para WhatsApp • Edição HOF & Estética
+                </p>
+              </div>
+
+              {/* Price Highlight */}
+              <div className="p-4 rounded-xl bg-ivory border border-border/80 mb-5 flex items-baseline justify-between">
+                <div>
+                  <span className="text-[11px] text-secondary block">Valor promocional</span>
+                  <span className="text-3xl sm:text-4xl font-extrabold text-graphite tracking-tight">
+                    R$ 19,90
+                  </span>
+                </div>
+                <span className="text-xs font-semibold text-gold-deep bg-white px-2.5 py-1 rounded-md border border-gold/30">
+                  Sem mensalidade
+                </span>
+              </div>
+
+              {/* Checkpoints */}
+              <div className="space-y-2.5 mb-6 text-xs text-graphite">
+                <div className="flex items-start gap-2">
+                  <div className="w-4 h-4 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0 mt-0.5">
+                    <Check className="w-2.5 h-2.5 stroke-[3]" />
+                  </div>
+                  <span><strong>120 respostas prontas</strong> para copiar e colar</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <div className="w-4 h-4 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0 mt-0.5">
+                    <Check className="w-2.5 h-2.5 stroke-[3]" />
+                  </div>
+                  <span><strong>3 packs completos</strong> (Primeiro contato, Agendamento e Retorno)</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <div className="w-4 h-4 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0 mt-0.5">
+                    <Check className="w-2.5 h-2.5 stroke-[3]" />
+                  </div>
+                  <span>Acesso online imediato para celular e computador</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <div className="w-4 h-4 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0 mt-0.5">
+                    <Check className="w-2.5 h-2.5 stroke-[3]" />
+                  </div>
+                  <span>Garantia incondicional de 7 dias com estorno fácil</span>
+                </div>
+              </div>
+
+              {/* Botão de Compra Direto (Link Kiwify) */}
+              <div className="pt-1">
+                <a
+                  href={KIWIFY_CHECKOUT_URL}
+                  onClick={handleCheckoutClick}
+                  className="w-full h-[54px] bg-graphite hover:bg-graphite-dark active:scale-[0.99] text-white font-bold text-sm sm:text-base tracking-wide rounded-xl flex items-center justify-center gap-2.5 transition-all shadow-btn group cursor-pointer"
+                >
+                  <span>QUERO ACESSAR POR R$ 19,90</span>
+                  <ArrowRight className="w-4 h-4 text-gold-soft group-hover:translate-x-1 transition-transform" />
+                </a>
+              </div>
+
+              {/* Microcopy de Confiança */}
+              <div className="pt-3 text-center">
+                <p className="text-xs text-secondary flex items-center justify-center gap-1.5 flex-wrap">
+                  <Lock className="w-3 h-3 text-gold-deep inline" />
+                  <span>Pagamento único</span>
+                  <span className="text-border">•</span>
+                  <span>Checkout seguro</span>
+                  <span className="text-border">•</span>
+                  <span>Sem mensalidade</span>
+                </p>
+
+                <div className="mt-2.5 text-[11px] text-secondary flex items-center justify-center gap-3">
+                  <button
+                    type="button"
+                    onClick={onOpenPrivacyModal}
+                    className="hover:text-graphite underline underline-offset-2 transition-colors cursor-pointer"
+                  >
+                    Política de Privacidade
+                  </button>
+                  <span className="text-border">•</span>
+                  <button
+                    type="button"
+                    onClick={onOpenTermsModal}
+                    className="hover:text-graphite underline underline-offset-2 transition-colors cursor-pointer"
+                  >
+                    Termos de Compra
+                  </button>
+                </div>
+              </div>
+
+            </div>
           </div>
 
         </div>

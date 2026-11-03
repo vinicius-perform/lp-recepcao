@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 import { Copy, Check, ArrowRight, MessageSquare, Sparkles } from 'lucide-react';
 import { PackItem } from '../types';
+import { KIWIFY_CHECKOUT_URL } from '../config';
+import { trackInitiateCheckout } from '../utils/analytics';
 
-interface SectionPacksProps {
-  onScrollToForm: () => void;
-}
-
-export const SectionPacks: React.FC<SectionPacksProps> = ({ onScrollToForm }) => {
+export const SectionPacks: React.FC = () => {
   const [copied, setCopied] = useState(false);
 
   const packsData: PackItem[] = [
@@ -211,13 +209,14 @@ export const SectionPacks: React.FC<SectionPacksProps> = ({ onScrollToForm }) =>
           </p>
 
           <div className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-3">
-            <button
-              onClick={onScrollToForm}
+            <a
+              href={KIWIFY_CHECKOUT_URL}
+              onClick={() => trackInitiateCheckout('kiwify-footer')}
               className="w-full sm:w-auto px-8 h-[54px] bg-graphite hover:bg-graphite-dark text-white font-bold text-sm sm:text-base tracking-wide rounded-xl flex items-center justify-center gap-2.5 transition-all shadow-btn group cursor-pointer"
             >
               <span>QUERO MEU KIT POR R$ 19,90</span>
               <ArrowRight className="w-4 h-4 text-gold-soft group-hover:translate-x-1 transition-transform" />
-            </button>
+            </a>
           </div>
 
           <p className="mt-3 text-xs text-secondary">
