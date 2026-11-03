@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { HeroSection } from './components/HeroSection';
 import { SectionPacks } from './components/SectionPacks';
 import { Footer } from './components/Footer';
-import { PrivacyModal, TermsModal, RefundModal, SupportModal } from './components/Modals';
+import { LegalModal, RefundModal, SupportModal } from './components/Modals';
 import { AccessView } from './components/AccessView';
 import { trackPageView, trackViewContent } from './utils/analytics';
 
@@ -13,8 +13,10 @@ export const App: React.FC = () => {
   });
 
   // Modals state
-  const [isPrivacyOpen, setIsPrivacyOpen] = useState(false);
-  const [isTermsOpen, setIsTermsOpen] = useState(false);
+  const [legalModal, setLegalModal] = useState<{ isOpen: boolean; tab: 'privacy' | 'terms' }>({
+    isOpen: false,
+    tab: 'privacy',
+  });
   const [isRefundOpen, setIsRefundOpen] = useState(false);
   const [isSupportOpen, setIsSupportOpen] = useState(false);
 
@@ -48,8 +50,8 @@ export const App: React.FC = () => {
       <main className="flex-1">
         {/* SEÇÃO 01: Hero de Vendas com Botão Direto para Checkout */}
         <HeroSection
-          onOpenPrivacyModal={() => setIsPrivacyOpen(true)}
-          onOpenTermsModal={() => setIsTermsOpen(true)}
+          onOpenPrivacyModal={() => setLegalModal({ isOpen: true, tab: 'privacy' })}
+          onOpenTermsModal={() => setLegalModal({ isOpen: true, tab: 'terms' })}
         />
 
         {/* SEÇÃO 02: Apresentação dos 3 Packs + Prévia da Ferramenta + CTA Final para Checkout */}
@@ -58,15 +60,18 @@ export const App: React.FC = () => {
 
       {/* Rodapé Minimalista */}
       <Footer
-        onOpenPrivacyModal={() => setIsPrivacyOpen(true)}
-        onOpenTermsModal={() => setIsTermsOpen(true)}
+        onOpenPrivacyModal={() => setLegalModal({ isOpen: true, tab: 'privacy' })}
+        onOpenTermsModal={() => setLegalModal({ isOpen: true, tab: 'terms' })}
         onOpenRefundModal={() => setIsRefundOpen(true)}
         onOpenSupportModal={() => setIsSupportOpen(true)}
       />
 
       {/* Legal & Support Modals */}
-      <PrivacyModal isOpen={isPrivacyOpen} onClose={() => setIsPrivacyOpen(false)} />
-      <TermsModal isOpen={isTermsOpen} onClose={() => setIsTermsOpen(false)} />
+      <LegalModal
+        isOpen={legalModal.isOpen}
+        initialTab={legalModal.tab}
+        onClose={() => setLegalModal((prev) => ({ ...prev, isOpen: false }))}
+      />
       <RefundModal isOpen={isRefundOpen} onClose={() => setIsRefundOpen(false)} />
       <SupportModal isOpen={isSupportOpen} onClose={() => setIsSupportOpen(false)} />
     </div>

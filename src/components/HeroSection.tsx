@@ -64,32 +64,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 Execução Imediata
               </span>
             </div>
-
-            {/* Apresentação do Preço */}
-            <div className="pt-1">
-              <div className="inline-flex flex-col sm:flex-row sm:items-baseline gap-2 sm:gap-4 p-4 sm:px-6 sm:py-4 rounded-2xl bg-white border border-champagne shadow-card w-full sm:w-auto">
-                <div>
-                  <span className="block text-[10px] sm:text-[11px] font-bold tracking-widest-editorial text-gold-deep uppercase">
-                    ACESSO COMPLETO
-                  </span>
-                  <div className="flex items-baseline gap-2 mt-0.5">
-                    <span className="text-3xl sm:text-4xl font-extrabold text-graphite tracking-tight font-sans">
-                      R$ 19,90
-                    </span>
-                  </div>
-                </div>
-
-                <div className="sm:border-l sm:border-border sm:pl-4 sm:my-auto">
-                  <p className="text-xs sm:text-sm font-medium text-secondary">
-                    Pagamento único. Sem mensalidade.
-                  </p>
-                  <p className="text-[11px] text-gold-deep">
-                    Acesso imediato para celular e computador
-                  </p>
-                </div>
-              </div>
-            </div>
-
           </div>
 
           {/* Colunas 8-12: Card de Compra Direta */}

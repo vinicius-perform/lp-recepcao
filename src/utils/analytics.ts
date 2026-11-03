@@ -68,12 +68,17 @@ export function generateEventId(prefix: string = 'evt'): string {
 /**
  * Track PageView event
  */
+let hasTrackedPageView = false;
+
 export function trackPageView(): string {
   const eventId = generateEventId('pv');
 
   if (typeof window !== 'undefined') {
     if (window.fbq) {
-      window.fbq('track', 'PageView', {}, { eventID: eventId });
+      if (hasTrackedPageView) {
+        window.fbq('track', 'PageView', {}, { eventID: eventId });
+      }
+      hasTrackedPageView = true;
     }
     if (window.gtag) {
       window.gtag('event', 'page_view', {
